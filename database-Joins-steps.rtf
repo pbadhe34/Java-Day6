@@ -1,0 +1,212 @@
+{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\ul\b\f0\fs22 Create and populate tables\par
+\ulnone\b0 mysql>\par
+Create Database testing;\par
+Use testing;\par
+SHOW TABLES;\par
+CREATE TABLE movies (id int NOT NULL,title VARCHAR(20), category VARCHAR(20), PRIMARY KEY (ID));\par
+\par
+CREATE TABLE members (\par
+    id int NOT NULL,\par
+    first_name VARCHAR(15),\par
+    last_name VARCHAR(15),\par
+    movie_id int,\par
+    PRIMARY KEY (id),\par
+    FOREIGN KEY (movie_id) REFERENCES movies(id)\par
+);\par
+\par
+describe movies;\par
+describe members;\par
+INSERT INTO movies VALUES( 65,'Lion King','animation');\par
+INSERT INTO movies VALUES( 34,'Expendables','action');\par
+\par
+INSERT INTO movies VALUES( 125,'King Island','romance');\par
+INSERT INTO movies VALUES( 115,'My Memoirs','selfmade');\par
+\par
+\par
+INSERT INTO movies VALUES( 16,'Ghost','horror');\par
+INSERT INTO movies VALUES( 11,'Tom and Jerry','animation');\par
+INSERT INTO movies VALUES( 101,'Mahabharat','animation');\par
+INSERT INTO movies VALUES( 87,'Darwaja','horror');\par
+INSERT INTO movies VALUES( 98,'Terminator','action');\par
+\par
+INSERT INTO members VALUES( 12,'wil','smith',65);\par
+INSERT INTO members VALUES( 63,'Silvester','Stallone',34);\par
+INSERT INTO members VALUES( 11,'Tom','Cryuise',16);\par
+INSERT INTO members VALUES( 15,'Tom','Cryuise',16);\par
+INSERT INTO members VALUES( 101,'Donlad','TuRP',11);\par
+INSERT INTO members VALUES( 103,'Meher','Bhosale',11);\par
+INSERT INTO members VALUES( 1011,'Amit','Bachhan',101);\par
+INSERT INTO members VALUES( 1114,'Ramu','Kapase',87);\par
+INSERT INTO members VALUES( 124,'Pannu','Tapase',87);\par
+INSERT INTO members VALUES( 1241,'Arnold','Shivajinagar',98);\par
+INSERT INTO members VALUES( 1341,'Tommy','Metal-Boy',98);\par
+INSERT INTO members VALUES( 1018,'Rajesh','Kumar',101);\par
+INSERT INTO members VALUES( 1018,'Rajesh','Kumar,101);\par
+INSERT INTO members VALUES( 17,'Madhav','Nayar',16);\par
+\par
+INSERT INTO members VALUES( 18,'Rupa','Ganguli',NULL);\par
+INSERT INTO members VALUES( 135,'Raja','Govind',NULL);\par
+INSERT INTO members VALUES( 28,'Maya','Madan',NULL);\par
+\par
+select * from members;\par
+select * from movies;\par
+*****************************************************************************\par
+\b Inner Join\par
+\b0 SELECT members.`first_name` , members.`last_name` , movies.`title`\par
+FROM members ,movies\par
+WHERE movies.`id` = members.`movie_id`\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members ,movies\par
+WHERE movies.id = members.movie_id\par
+\par
+SELECT A.first_name , A.last_name , B.title\par
+FROM members AS A\par
+INNER JOIN  movies AS B\par
+ON B.id = A.movie_id\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id AND  movies.id = 11\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id AND  movies.title = 'Terminator'\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id AND  movies.title = 'Terminator'\par
+ORDER BY\par
+movies.id DESC;\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+JOIN  movies  \par
+ON movies.id = members.movie_id AND  movies.title = 'Terminator'\par
+ORDER BY\par
+movies.id DESC;\par
+\par
+SELECT A.first_name , A.last_name , B.title\par
+FROM members AS A\par
+INNER JOIN  movies AS B\par
+ON B.id = A.movie_id\par
+ORDER BY\par
+A.id DESC;\par
+\par
+SELECT A.first_name , A.last_name , B.title\par
+FROM members AS A\par
+INNER JOIN  movies AS B\par
+ON B.id = A.movie_id\par
+ORDER BY\par
+A.id ASC;\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id\par
+ORDER BY\par
+members.id DESC;\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id\par
+GROUP BY movies.title\par
+ORDER BY\par
+movies.title DESC;\par
+\par
+SELECT members.first_name , members.last_name , movies.title\par
+FROM members  \par
+INNER JOIN  movies  \par
+ON movies.id = members.movie_id\par
+GROUP BY movies.id\par
+ORDER BY\par
+movies.id DESC;\par
+\par
+SELECT A.`first_name` , A.`last_name` , B.`title`\par
+FROM `members`AS A\par
+INNER JOIN `movies` AS B\par
+ON B.`id` = A.`movie_id`\par
+\par
+SELECT A.`first_name` , A.`last_name` , B.`title`\par
+FROM `members`AS A\par
+INNER JOIN `movies` AS B\par
+ON B.`id` = A.`movie_id`\par
+\par
+SELECT members.`first_name` , members.`last_name` , movies.`title`\par
+FROM members ,movies\par
+WHERE movies.`id` = members.`movie_id`=98\par
+*************************************************\par
+\ul\b LEFT JOIN\par
+\ulnone\b0 Get titles of all movies together with names of members who have used them. \par
+The LEFT JOIN returns all the rows from the table on the left even if no matching rows have been found in the table on the right. Where no matches have been found in the table on the right, NULL is returned.\par
+SELECT A.`title` , B.`first_name` , B.`last_name`\par
+FROM `movies` AS A\par
+LEFT JOIN `members` AS B\par
+ON B.`movie_id` = A.`id`\par
+\par
+\b USING with above LEFT JOIN example.\par
+\b0 SELECT A.`title` , B.`first_name` , B.`last_name`\par
+FROM `movies` AS A\par
+LEFT JOIN `members` AS B\par
+USING ( `movie_id` )\par
+Apart from using ON and USING with JOINs you can use many other MySQL clauses like GROUP BY, WHERE and even functions like SUM, AVG, etc.\par
+*********************************************\par
+\par
+\ul\b RIGHT JOIN\par
+\ulnone\b0 RIGHT JOIN is obviously the opposite of LEFT JOIN. The RIGHT JOIN returns all the columns from the table on the right even if no matching rows have been found in the table on the left. Where no matches have been found in the table on the left, NULL is returned.\par
+To get names of members and movies used by them. Now we may have a new member who has not used any movie yet\par
+SELECT  A.`first_name` , A.`last_name`, B.`title`\par
+FROM `members` AS A\par
+RIGHT JOIN `movies` AS B\par
+ON A.movie_id = B.id\par
+***********************************************\par
+\ul\b OUTER JOIN \par
+\ulnone\b0 SELECT movies.title , members.first_name\par
+FROM members\par
+OUTER JOIN movies\par
+ON members.id= movies.id\par
+WHERE movies.id= 16;\par
+ \par
+\b ON clause to match the records between table.\b0\par
+\b USING \b0 clause can also be used for the same purpose. The difference with USING is it needs to have identical names for matched columns in both tables.\par
+********************************************************\par
+\ul\b FULL OUTER JOIN\par
+\ulnone\par
+Syntax for Full Outer Join : NOT supported on Mysql ver 5.1\par
+\b0 SELECT members.first_name, movies.title\par
+FROM movies\par
+FULL OUTER JOIN members ON members.id=movies.id\par
+ORDER BY members.first_name;\par
+\b\par
+No FULL JOINS on MySQL.\par
+where a FULL OUTER JOIN operation would not produce any duplicate rows. The query depends on the UNION set operator to remove duplicate rows introduced by the query pattern\par
+\b0 SELECT * FROM members\par
+LEFT JOIN movies ON members.id= movies.id\par
+UNION\par
+SELECT * FROM members\par
+RIGHT JOIN movies ON members.id= movies.id\par
+\b\par
+Where a FULL OUTER JOIN would return duplicate rows,  \par
+\b0 SELECT * FROM members\par
+LEFT JOIN movies ON  members.id= movies.id\par
+UNION ALL\par
+SELECT * FROM members\par
+RIGHT JOIN movies ON members.id= movies.id\par
+WHERE movies.id IS NULL\par
+\b *************************************************\par
+Why Joins ?\par
+\b0 Using JOINs, you can get the work done by using only a one query with any search parameters. On the other hand MySQL can achieve better performance with JOINs as it can use Indexing. Simply use of single JOIN query instead running multiple queries do reduce server overhead. Using multiple queries instead that leads more data transfers between MySQL and applications (software). Further it requires more data manipulations in application end also.\par
+Achieve better MySQL and application performances by use of JOINs.\par
+\par
+\par
+\par
+ \par
+\par
+\par
+}
+ 

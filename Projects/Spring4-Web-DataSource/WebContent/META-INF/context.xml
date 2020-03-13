@@ -1,0 +1,20 @@
+<Context>
+  <!-- Use local datasource created for application by the Container -->
+  
+  <Resource name="jdbc/AppDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            username="system"
+            password="admin"
+            driverClassName="oracle.jdbc.driver.OracleDriver"
+            url="jdbc:oracle:thin:@localhost:1521:XE"
+            maxActive="8"
+            maxIdle="4"
+            minIdle="5" 
+            maxWait="10000"/>
+            
+            
+            <!-- Refer to the global datasource by local name -->
+          <!--   <ResourceLink name="jdbc/MyLocal" global="jdbc/GlobalDB" type="javax.sql.DataSource"/> -->
+  
+</Context>
